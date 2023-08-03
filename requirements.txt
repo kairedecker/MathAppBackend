@@ -1,0 +1,5 @@
+Django==4.2.3
+psycopg2-binary==2.9.6
+djangorestframework
+markdown       # Markdown support for the browsable API.
+django-filter  # Filtering support
