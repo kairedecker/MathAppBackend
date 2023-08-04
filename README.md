@@ -4,6 +4,9 @@ Setup from:
 https://testdriven.io/blog/dockerizing-django-with-postgres-gunicorn-and-nginx/
 Without gunicorn and nginx
 
+Checkout this as well:
+https://github.com/veryacademy/docker-mastery-with-django
+
 ```
 docker-compose build
 docker-compose run --rm app django-admin startproject core .
