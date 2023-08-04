@@ -11,8 +11,9 @@ With this tutorial on youtube:
 https://www.youtube.com/watch?v=W5Ov0H7E_o4&list=PLOLrQ9Pn6cazCfL7v4CdaykNoWMQymM_C&ab_channel=VeryAcademy  
 
 
-Start with setting up local python env and install requirements.txt
+Start with setting up local python env and install requirements.txt  
 
+Then build docker image and create django project:
 ```
 docker-compose build
 docker-compose run --rm app django-admin startproject core .
