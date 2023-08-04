@@ -7,6 +7,8 @@ https://testdriven.io/blog/dockerizing-django-with-postgres-gunicorn-and-nginx/
 
 Checkout this as well:
 https://github.com/veryacademy/docker-mastery-with-django
+With this tutorial on youtube:
+https://www.youtube.com/watch?v=W5Ov0H7E_o4&list=PLOLrQ9Pn6cazCfL7v4CdaykNoWMQymM_C&ab_channel=VeryAcademy
 
 ```
 docker-compose build
