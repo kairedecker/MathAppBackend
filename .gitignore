@@ -56,5 +56,9 @@ target/
 # Vim
 .ropeproject
 
-
+# Exclude env dev
 .env.dev
+
+# Exclude postgres data
+
+data/
