@@ -19,11 +19,6 @@ docker-compose build
 docker-compose run --rm app django-admin startproject core .
 docker-compose up
 ```
-or 
-```
-docker-compose up -d --build
-```
-
 
 Database migrations from Django on docker: (not necessary with etrypoint.sh!)
 ```
