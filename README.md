@@ -1,8 +1,9 @@
 # MathAppBackend
 
-Setup from: 
+Setup from: (Without gunicorn and nginx)
 https://testdriven.io/blog/dockerizing-django-with-postgres-gunicorn-and-nginx/
-Without gunicorn and nginx
+
+
 
 Checkout this as well:
 https://github.com/veryacademy/docker-mastery-with-django
@@ -22,4 +23,3 @@ Database migrations from Django on docker: (not necessary with etrypoint.sh!)
 ```
 docker-compose exec web python manage.py migrate --noinput
 ```
-
