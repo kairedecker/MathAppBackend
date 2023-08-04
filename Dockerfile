@@ -2,7 +2,7 @@
 FROM python:3.11.4-slim-buster
 
 # set work directory
-WORKDIR /usr/src/
+WORKDIR /django
 
 # set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
@@ -15,8 +15,8 @@ RUN pip install -r requirements.txt
 
 # copy entrypoint.sh
 COPY entrypoint.sh .
-RUN sed -i 's/\r$//g' /usr/src/entrypoint.sh
-RUN chmod +x /usr/src/entrypoint.sh
+RUN sed -i 's/\r$//g' /django/entrypoint.sh
+RUN chmod +x /django/entrypoint.sh
 
 RUN apt-get update && apt-get install -y netcat
 
@@ -24,4 +24,4 @@ RUN apt-get update && apt-get install -y netcat
 COPY . .
 
 # run entrypoint.sh
-ENTRYPOINT ["/usr/src/entrypoint.sh"]
+ENTRYPOINT ["/django/entrypoint.sh"]
