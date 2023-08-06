@@ -60,5 +60,7 @@ target/
 .env.dev
 
 # Exclude postgres data
-
 data/
+
+# Exclude entrypoint.sh
+#.entrypoint.sh
