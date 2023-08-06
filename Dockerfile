@@ -21,7 +21,7 @@ RUN chmod +x /django/entrypoint.sh
 RUN apt-get update && apt-get install -y netcat
 
 # copy project
-COPY . .
+#COPY . .
 
 # run entrypoint.sh
-ENTRYPOINT ["/django/entrypoint.sh"]
+ENTRYPOINT ["sh","/django/entrypoint.sh"]
