@@ -43,7 +43,9 @@ For mac add the following after building to update local file permissions:
 chmod +x app/entrypoint.sh
 ```
 
-Database migrations from Django on docker: (not necessary with etrypoint.sh!)
+For changes in models:
 ```
+docker-compose run --rm app python manage.py makemigrations
 docker-compose exec web python manage.py migrate --noinput
 ```
+
