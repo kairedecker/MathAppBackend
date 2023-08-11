@@ -1,8 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 
-# Create your models here.
-
 class CustomUserManager(BaseUserManager):
 
     def _create_user(self, email, user_name, login_provider, password=None, **extra_fields):
@@ -46,7 +44,7 @@ class CustomUserManager(BaseUserManager):
 
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
-    user_name = models.CharField(max_length=30, unique=True)
+    user_name = models.CharField(max_length=30, unique=False)
     email = models.EmailField(db_index=True, max_length=255, unique=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
