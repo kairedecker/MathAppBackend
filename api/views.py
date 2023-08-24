@@ -40,9 +40,22 @@ class UserList(APIView):
         serializer = RegisterCustomUserSerializer(users, many=True)
         return Response(data=serializer.data, status=status.HTTP_200_OK)
 
+class UserInfo(APIView):
+    permission_classes = [IsAuthenticated]
+    def get(self, request, email):
+        if CustomUser.objects.get(email=email).exists():
+            user = CustomUser.objects.get(email=email)
+            serializer = CustomUser(user)
+            return Response(data=serializer.data, status=status.HTTP_200_OK)
+        else:
+            return Response(status=status.HTTP_404_NOT_FOUND) 
+
 class UserDelete(APIView):
     permission_classes = [IsAuthenticated]
     def delete(self, request, email):
-        user = CustomUser.objects.get(email=email)
-        user.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        try:
+            user = CustomUser.objects.get(email=email)
+            user.delete()
+            return Response(status=status.HTTP_202_ACCEPTED)
+        except:
+            return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
