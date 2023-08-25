@@ -2,29 +2,19 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
 from api.models import CustomUser
-from .serializers import RegisterCustomUserSerializer
+from .serializers import RegisterGuestSerializer, CustomUserSerializer
 from rest_framework.permissions import IsAuthenticated
+from .permissions import IsGuestUser
 
-class GetRoutes(APIView):
-    def get(self, request):
-        routes = [
-            '/api/login',
-            '/api/login/refresh',
-            '/api/register',
-            '/api/users',
-            '/api/delete-user/<str:email>'
-        ]
-        return Response(routes)
-    
-class RegisterUser(APIView):
-    serializer_class = RegisterCustomUserSerializer
+class RegisterGuestUser(APIView):
+    serializer_class = RegisterGuestSerializer
     
     def post(self, request):
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid(raise_exception=True):
             user = serializer.save()
             return Response(
-                    RegisterCustomUserSerializer(user).data,
+                    RegisterGuestSerializer(user).data,
                     status=status.HTTP_201_CREATED
                 )
         else:
@@ -33,28 +23,23 @@ class RegisterUser(APIView):
                     status=status.HTTP_400_BAD_REQUEST
                 )
 
-class UserList(APIView):
-    permission_classes = [IsAuthenticated]
-    def get(self, request):
-        users = CustomUser.objects.all()
-        serializer = RegisterCustomUserSerializer(users, many=True)
-        return Response(data=serializer.data, status=status.HTTP_200_OK)
-
 class UserInfo(APIView):
-    permission_classes = [IsAuthenticated]
-    def get(self, request, email):
-        if CustomUser.objects.get(email=email).exists():
-            user = CustomUser.objects.get(email=email)
-            serializer = CustomUser(user)
+    permission_classes = [IsAuthenticated, IsGuestUser]
+    serializer_class = CustomUserSerializer
+    def get(self, request, user_name):
+        if CustomUser.objects.filter(user_name=user_name).exists():
+            user = CustomUser.objects.get(user_name=user_name)
+            serializer = self.serializer_class(user)
             return Response(data=serializer.data, status=status.HTTP_200_OK)
         else:
             return Response(status=status.HTTP_404_NOT_FOUND) 
 
 class UserDelete(APIView):
     permission_classes = [IsAuthenticated]
-    def delete(self, request, email):
+    erializer_class = CustomUserSerializer
+    def delete(self, request, user_name):
         try:
-            user = CustomUser.objects.get(email=email)
+            user = CustomUser.objects.get(user_name=user_name)
             user.delete()
             return Response(status=status.HTTP_202_ACCEPTED)
         except:
