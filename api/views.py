@@ -2,13 +2,18 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
 from api.models import CustomUser
-from .serializers import RegisterGuestSerializer, CustomUserSerializer, RegisterUserSerializer, UpdateUserSerializer
+from .serializers import *
 from rest_framework.permissions import IsAuthenticated
 from .permissions import IsGuestUser, IsRegisteredUser
 
 class RegisterGuestUser(APIView):
+    ''' 
+    Erstellt einen Guest User
+    Nutzername und Passwort werden automatisch erzeugt
+    Nutername: guestXXXXX
+    Passwort: guest
+    '''
     serializer_class = RegisterGuestSerializer
-    
     def post(self, request):
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid(raise_exception=True):
@@ -24,6 +29,7 @@ class RegisterGuestUser(APIView):
                 )
 
 class UserInfo(APIView):
+    ''' Gibt die Info des Users zurück - möglich für alle Nutzer'''
     permission_classes = [IsAuthenticated]
     serializer_class = CustomUserSerializer
     def get(self, request):
@@ -37,6 +43,7 @@ class UserInfo(APIView):
             return Response(data={'message': 'User not found'}, status=status.HTTP_404_NOT_FOUND) 
 
 class UserDelete(APIView):
+    ''' User löschen - nur erlaubt für registrierte Nutzer'''
     permission_classes = [IsAuthenticated, IsRegisteredUser]
     erializer_class = CustomUserSerializer
     def delete(self, request):
@@ -49,6 +56,7 @@ class UserDelete(APIView):
         return Response(data={'message': 'User deleted'}, status=status.HTTP_202_ACCEPTED)
         
 class RegisterUser(APIView):
+    ''' Registrieren ist nur für Guest-User möglich '''
     permission_classes = [IsAuthenticated, IsGuestUser]
     serializer_class = RegisterUserSerializer
     def patch(self, request):
@@ -68,6 +76,7 @@ class RegisterUser(APIView):
                 )
 
 class UpdateUser(APIView):
+    ''' Ein Update der User-Daten ist nur für registrierte User möglich '''
     permission_classes = [IsAuthenticated, IsRegisteredUser]
     serializer_class = UpdateUserSerializer
     def patch(self, request):

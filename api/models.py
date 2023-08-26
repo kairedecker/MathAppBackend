@@ -9,11 +9,11 @@ class CustomUserManager(BaseUserManager):
         length = 5
         while True:
             generated_guest_username = ''.join(random.choices(string.ascii_uppercase + string.digits, k=length))
-            if not CustomUser.objects.filter(user_name=generated_guest_username) == 0:
+            if not CustomUser.objects.filter(user_name=generated_guest_username).exists():
                 break
         return 'guest' + generated_guest_username
       
-    def create_user(self, is_guest, **extra_fields):
+    def create_guest_user(self, is_guest, **extra_fields):
         extra_fields.setdefault("is_active", True)
         extra_fields.setdefault("is_staff", True)
         extra_fields.setdefault("is_superuser", False)
