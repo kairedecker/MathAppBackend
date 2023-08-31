@@ -49,3 +49,10 @@ docker-compose run --rm app python manage.py makemigrations
 docker-compose exec web python manage.py migrate --noinput
 ```
 
+
+Run Tests:
+```
+docker-compose run --rm app python manage.py test
+```
+
+

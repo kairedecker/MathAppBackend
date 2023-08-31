@@ -18,7 +18,6 @@ class CustomUserManager(BaseUserManager):
         extra_fields.setdefault("is_staff", True)
         extra_fields.setdefault("is_superuser", False)
         generated_guest_username = CustomUserManager._generate_guest_username()
-        print(generated_guest_username)
         user = self.model(is_guest=is_guest, user_name=generated_guest_username, **extra_fields)
         user.set_password('guest')
         return user 

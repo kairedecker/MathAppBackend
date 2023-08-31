@@ -34,7 +34,6 @@ class UserInfo(APIView):
     serializer_class = CustomUserSerializer
     def get(self, request):
         user_name = request.user.user_name
-        print(user_name)
         if CustomUser.objects.filter(user_name=user_name).exists():
             user = CustomUser.objects.get(user_name=user_name)
             serializer = self.serializer_class(user)
