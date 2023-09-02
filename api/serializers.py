@@ -2,8 +2,6 @@ from rest_framework import serializers
 from .models import CustomUser
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
-DIGIT_COUNT = 5
-
 class CustomUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
@@ -22,13 +20,9 @@ class RegisterGuestSerializer(serializers.ModelSerializer):
             'user_name': {'read_only': True},
             'is_guest': {'read_only': True}
         }
-
     
     def create(self, validated_data):
-        is_guest = True
-        user = CustomUser.objects.create_guest_user(
-            is_guest=is_guest,
-        )
+        user = CustomUser.objects.create_guest_user()
         user.save()
         return user
 
